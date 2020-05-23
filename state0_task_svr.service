@@ -1,0 +1,16 @@
+[Unit]
+Description=gcam-rpi-svr
+After=network-online.target syslog.target
+
+[Service]
+Type=simple
+WorkingDirectory=/var/www/gcam/gcam
+ExecStart=/var/www/gcam/gcam/state0_task_svr.py
+StandardOutput=syslog
+StandardError=syslog
+User=pi
+Group=pi
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Guy Monitoring System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+ 
+      h1 {
+	  text-align: center;
+	  font-family: Arial;
+	  font-size: 25px;
+      }
+      h2 {
+	  text-align: center;
+	  font-family: Arial;
+	  font-size: 20px;
+      }
+      table {
+	  border-collapse: collapse;
+	  width: 100%;
+      }
+
+      th, td {
+	  font-weight: normal;
+	  padding: 8px;
+	  text-align: left;
+	  border-bottom: 1px solid #ddd;
+	  border-top: 1px solid #ddd;
+      }
+      body {
+	  font-family: Arial;
+      }
+    </style>
+    
+  </head>
+  <body>
+
+    Setting pwrLED={{pwrLED}}...
+
+  <script>
+       setTimeout(function(){
+           window.location.href = 'http://'.concat(window.location.hostname);
+       }, 1000);
+  </script>
+
+  </body>
+</html>

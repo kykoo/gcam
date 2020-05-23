@@ -1,0 +1,50 @@
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Guy Monitoring System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+ 
+      h1 {
+	  text-align: center;
+	  font-family: Arial;
+	  font-size: 25px;
+      }
+      h2 {
+	  text-align: center;
+	  font-family: Arial;
+	  font-size: 20px;
+      }
+      table {
+	  border-collapse: collapse;
+	  width: 100%;
+      }
+
+      th, td {
+	  font-weight: normal;
+	  padding: 8px;
+	  text-align: left;
+	  border-bottom: 1px solid #ddd;
+	  border-top: 1px solid #ddd;
+      }
+      body {
+	  font-family: Arial;
+      }
+    </style>
+    
+  </head>
+  <body>
+    <h2>Accelerometer Threshold Values</h2>
+    <form action="{% url 'cpanel:setup_update' %}" method="post">
+      {% csrf_token %}
+      <label for="acc_threshold_1">ACC1: </label>
+      <input type="text" name="acc_threshold_1" value="{{acc_threshold.0}}"><br>
+      <label for="acc_threshold_2">ACC2: </label>
+      <input type="text" name="acc_threshold_2" value="{{acc_threshold.1}}"><br>
+      <label for="acc_threshold_3">ACC3: </label>
+      <input type="text" name="acc_threshold_3" value="{{acc_threshold.2}}"><br>
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>

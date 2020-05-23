@@ -1,0 +1,178 @@
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Guy Monitoring System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+-->
+    <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
+<!--    <link rel="stylesheet" href="wiki-mobile.css"> -->
+    <meta http-equiv="refresh" content="10">
+  
+
+    <style>
+ 
+      h1 {
+	  text-align: center;
+	  font-family: Arial;
+	  font-size: 25px;
+      }
+      h2 {
+	  text-align: center;
+	  font-family: Arial;
+	  font-size: 20px;
+      }
+      table {
+	  border-collapse: collapse;
+	  width: 100%;
+      }
+
+      th, td {
+	  font-weight: normal;
+	  padding: 8px;
+	  text-align: left;
+	  border-bottom: 1px solid #ddd;
+	  border-top: 1px solid #ddd;
+      }
+      body {
+	  font-family: Arial;
+      }
+    </style>
+    <!-- slider switch -->
+    <style>
+      .switch {
+	  position: relative;
+	  display: inline-block;
+	  width: 60px;
+	  height: 34px;
+	  vertical-align: moddle;
+      }
+
+      .slider {
+	  position: absolute;
+	  cursor: pointer;
+	  top: 0;
+	  left: 0;
+	  right: 0;
+	  bottom: 0;
+	  background-color: #ccc;
+	  -webkit-transition: .4s;
+	  transition: .4s;
+      }
+
+      .slider:before {
+	  position: absolute;
+	  content: "";
+	  height: 26px;
+	  width: 26px;
+	  left: 4px;
+	  bottom: 4px;
+	  background-color: white;
+	  -webkit-transition: .4s;
+	  transition: .4s;
+      }
+
+      input:checked + .slider {
+	  background-color: #2196F3;
+      }
+
+      input:focus + .slider {
+	  box-shadow: 0 0 1px #2196F3;
+      }
+
+      input:checked + .slider:before {
+	  -webkit-transform: translateX(26px);
+	  -ms-transform: translateX(26px);
+	  transform: translateX(26px);
+      }
+
+      /* Rounded sliders */
+      .slider.round {
+	  border-radius: 34px;
+      }
+
+      .slider.round:before {
+	  border-radius: 50%;
+      }
+      [type="checkbox"]
+      {
+	  vertical-align:middle;
+      }
+    </style>
+    
+  </head>
+  <body>
+    <h2>Guy Monitoring Setup</h2>
+
+    <table class="tg">
+      <tr>
+      	<td class="tg-0lax">
+	  <b>CAM{{icam}}</b>
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  <form action="{% url 'cpanel:LED_control' %}" method="post" style="margin: 0; padding: 0;">
+	    {% csrf_token %}
+	    &emsp;<a href="/gcam_view">Live-View</a>
+		<label for="x">&emsp;&emsp;&emsp;Infrared LED On/Off: </label><input style="display: inline;" type="checkbox" {{pwrLED}} name="pwrLED" onchange="this.form.submit();" id="x" />
+	    </form>
+	</td>
+      </tr>
+
+      <tr>
+	<td class="tg-0lax">
+	  &emsp;Latest Video: <a href="video_play?filename={{latest_videoFile}}">{{latest_videoFile}}</a>
+	</td>
+      </tr>
+
+      <tr>
+	<td class="tg-c3ow">
+	  <b>ACC[1-3]</b>
+	</td>
+      </tr>
+      <tr>
+	<td class="tg-0lax">
+	  &emsp;State: [{{acc_state.0}},{{acc_state.1}},{{acc_state.2}}]<sup>1</sup>,&ensp;RMS: [{{acc_rms.1}}, {{acc_rms.3}}, {{acc_rms.5}}] (g)
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  &emsp;Latest files:<br>
+	  &emsp;&emsp;<a href="{% url 'cpanel:acc_plot' %}?icam={{icam}}&iacc=1&timestamp={{latest_accFiles.0}}">gcam{{icam}}-acc1-acc-{{latest_accFiles.0}}</a><br>
+	  &emsp;&emsp;<a href="{% url 'cpanel:acc_plot' %}?icam={{icam}}&iacc=2&timestamp={{latest_accFiles.1}}">gcam{{icam}}-acc2-acc-{{latest_accFiles.1}}</a><br>
+	  &emsp;&emsp;<a href="{% url 'cpanel:acc_plot' %}?icam={{icam}}&iacc=3&timestamp={{latest_accFiles.2}}">gcam{{icam}}-acc3-acc-{{latest_accFiles.2}}</a>
+	</td>
+      </tr>
+            
+      <tr>
+	<td class="tg-c3ow">
+	  <b>CTLR</b><sup>S{{state}}</sup>
+	</td>
+      </tr>
+      <tr>
+	<td class="tg-0lax">
+	  &emsp;Acc-Thresholds: <a href="{% url 'cpanel:setup' %}">{{acc_threshold}}</a> (g)
+	</td>
+      </tr>
+      <tr>
+	<td class="tg-0lax">
+	  &emsp;GPS Time: {{time}} (UTC)
+	</td>
+      </tr>
+      <tr>
+	<td class="tg-0lax">
+	  &emsp;Mem: {{mem.0}}%/{{mem.1}}<sup>2</sup>,&ensp;Disk: {{disk.0}}%/{{disk.1}}%<sup>3</sup>,&ensp;Bat. {{volt}}V
+	</td>
+      </tr>      
+    </table>
+    1) 1=wake-up, 2=measure, 3=sleep<br>
+    2) memory used: Heap (%)/Stack-Size<br>
+    3) disk used: Flash(%)/SD-Card(%)
+
+  </body>
+</html>

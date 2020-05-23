@@ -1,0 +1,16 @@
+[Unit]
+Description=picamera web streaming
+After=network-online.target syslog.target
+
+[Service]
+Type=simple
+WorkingDirectory=/var/www/gcam/gcam
+ExecStart=/var/www/gcam/gcam/64_video_streaming.py 
+StandardOutput=syslog
+StandardError=syslog
+User=pi
+Group=pi
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

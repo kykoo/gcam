@@ -1,0 +1,29 @@
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Guy Monitoring System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <style>
+      body {
+          font-family: Arial;
+      }
+    </style>
+    
+  </head>
+  <body>
+    Starting Camera Streaming Server...
+    <script>
+      setTimeout(function(){
+	  //window.location.href = 'http://dev1.local:8001/';
+	  var target = "http://".concat(window.location.hostname,":8001/");
+	  //window.alert(target);
+	  window.location.href = target;
+      }, 2000);
+      </script>
+   
+  </body>
+</html>
+
